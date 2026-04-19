@@ -1,0 +1,566 @@
+<!DOCTYPE html> 
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ATRIUM — цифровая доска для совместной работы</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0B0D12;
+      font-family: 'Inter', sans-serif;
+      color: #EDEDF0;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header / навигация */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #FFFFFF; /* ATRI и M белые */
+    }
+
+    .tiffany-letter {
+      color: #7FDBD6; /* цвет тиффани */
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      font-weight: 500;
+    }
+    .nav-links a {
+      color: #C0C5D0;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: #0ABAB5;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 80px 0 60px;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #FFFFFF, #D4D8E6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 16px;
+    }
+    .hero-tags {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin: 20px 0 24px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #0ABAB5;
+    }
+    .hero-description {
+      max-width: 720px;
+      margin: 0 auto 32px;
+      font-size: 1.2rem;
+      color: #B8BECB;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: #0ABAB5;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #0B0D12;
+      cursor: pointer;
+      transition: 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      background: #0DD3CD;
+      transform: scale(1.02);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #3A3F4C;
+      padding: 12px 32px;
+      border-radius: 40px;
+      font-weight: 500;
+      color: #EDEDF0;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .btn-outline:hover {
+      border-color: #0ABAB5;
+      color: #0ABAB5;
+    }
+
+    /* общие секции */
+    section {
+      padding: 72px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 8px;
+      color: #0ABAB5;
+      letter-spacing: 1px;
+    }
+    .section-sub {
+      text-align: center;
+      color: #FFFFFF;
+      margin-bottom: 48px;
+      font-size: 2.2rem;
+      font-weight: 600;
+    }
+
+    /* преимущества (карточки) */
+    .advantages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+    .adv-card {
+      background: rgba(20, 24, 32, 0.6);
+      border: 1px solid #232731;
+      border-radius: 28px;
+      padding: 28px;
+      transition: all 0.2s;
+    }
+    .adv-card:hover {
+      border-color: #0ABAB5;
+    }
+    .adv-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .adv-list {
+      list-style: none;
+      padding-left: 0;
+    }
+    .adv-list li {
+      margin-bottom: 10px;
+      padding-left: 20px;
+      position: relative;
+      color: #C5CAD5;
+    }
+    .adv-list li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: #0ABAB5;
+    }
+
+    /* возможности (сетка 2 колонки) */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+    }
+    .feature-item {
+      background: #0F1118;
+      border-radius: 24px;
+      padding: 24px;
+      border: 1px solid #252A34;
+    }
+    .feature-item h3 {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .feature-item ul {
+      list-style: none;
+    }
+    .feature-item li {
+      margin-bottom: 10px;
+      padding-left: 20px;
+      position: relative;
+      color: #B0B6C5;
+    }
+    .feature-item li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: #0ABAB5;
+    }
+
+    /* тарифы */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin-top: 20px;
+    }
+    .pricing-card {
+      background: #0F1118;
+      border: 1px solid #262C38;
+      border-radius: 32px;
+      padding: 32px 24px;
+      text-align: center;
+      transition: 0.2s;
+    }
+    .pricing-card:hover {
+      border-color: #0ABAB5;
+    }
+    .pricing-name {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .pricing-desc {
+      color: #9CA3AF;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      min-height: 70px;
+    }
+    .pricing-price {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 28px;
+    }
+    .btn-price {
+      background: #0ABAB5;
+      border: none;
+      width: 100%;
+      padding: 12px;
+      border-radius: 60px;
+      font-weight: 600;
+      color: #0B0D12;
+      cursor: pointer;
+      transition: 0.2s;
+     }
+     .btn-price:hover {
+       background: #0DD3CD;
+     }
+     .btn-price-outline {
+       background: transparent;
+       border: 1px solid #0ABAB5;
+       width: 100%;
+       padding: 12px;
+       border-radius: 60px;
+       font-weight: 600;
+       color: #0ABAB5;
+       cursor: pointer;
+       transition: 0.2s;
+      }
+      .btn-price-outline:hover {
+        background: rgba(10, 186, 181, 0.1);
+      }
+      .logo-atrium {
+        color: #FFFFFF;
+      }
+
+      .tiffany-u {
+        color: #0ABAB5;
+      }
+
+    /* форма */
+    .form-block {
+      background: #0F1118;
+      border-radius: 32px;
+      padding: 48px 32px;
+      text-align: center;
+      border: 1px solid #262C38;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .form-block h3 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+    .form-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin: 32px 0 20px;
+    }
+    .form-group input {
+      flex: 1;
+      padding: 14px 20px;
+      background: #1A1E28;
+      border: 1px solid #2E3440;
+      border-radius: 60px;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+    }
+    .form-group input:focus {
+      border-color: #0ABAB5;
+    }
+
+    /* футер */
+    footer {
+      text-align: center;
+      padding: 48px 0 32px;
+      color: #5F6A7A;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 780px) {
+      .hero h1 { font-size: 2.4rem; }
+      .hero-tags { gap: 16px; font-size: 0.9rem; }
+      .container { padding: 0 20px; }
+      section { padding: 48px 0; }
+      .section-title { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- навигация -->
+  <div class="navbar">
+    <div class="logo">ATRI<span class="tiffany-letter">U</span>M</div>
+    <div class="nav-links">
+      <a href="#">Главная</a>
+      <a href="#advantages">Преимущества</a>
+      <a href="#features">Возможности</a>
+      <a href="#pricing">Тарифы</a>
+    </div>
+  </div>
+
+  <!-- Hero блок -->
+  <div class="hero">
+    <h1>ЦИФРОВАЯ ДОСКА<br>ДЛЯ СОВМЕСТНОЙ РАБОТЫ</h1>
+    <div class="hero-tags">
+      <span>СХЕМЫ</span> <span>ПОСТЫ</span> <span>МАКЕТЫ</span>
+    </div>
+    <p class="hero-description">
+      Цифровая доска, где аналитики строят схемы, SMM-щики создают посты, а дизайнеры рисуют макеты.<br>
+      Вместо Miro, Canva и Excel. В реальном времени. На русском.
+    </p>
+    <div class="btn-group">
+      <a href="#register" class="btn-primary">Зарегистрироваться</a>
+      <a href="#features" class="btn-outline">Подробнее</a>
+    </div>
+  </div>
+</div>
+
+<!-- ПРЕИМУЩЕСТВА -->
+<section id="advantages">
+  <div class="container">
+    <div class="section-title">ПРЕИМУЩЕСТВА</div>
+    <div class="section-sub">Почему нас выбирают</div>
+    <div class="advantages-grid">
+      <div class="adv-card">
+        <div class="adv-title">🇷🇺 Русскоязычность</div>
+        <ul class="adv-list">
+          <li>Удобство использования российским пользователям</li>
+          <li>Отсутствие языкового барьера</li>
+        </ul>
+      </div>
+      <div class="adv-card">
+        <div class="adv-title">🔒 Режим клиента с защищёнными зонами</div>
+        <ul class="adv-list">
+          <li>Безопасное согласование со стейкхолдерами</li>
+          <li>Конфиденциальность внутри одного рабочего пространства</li>
+          <li>Презентации без риска утечки данных</li>
+        </ul>
+      </div>
+      <div class="adv-card">
+        <div class="adv-title">🧩 Универсальность инструментов</div>
+        <ul class="adv-list">
+          <li>Один продукт заменяет Canva, PowerPoint, базовый векторный редактор</li>
+          <li>Презентация создается на той же доске, где проходил брейншторм</li>
+        </ul>
+      </div>
+      <div class="adv-card">
+        <div class="adv-title">⚡ Симуляция и интерактивные прототипы</div>
+        <ul class="adv-list">
+          <li>Быстрая проверка гипотез без смены инструмента</li>
+          <li>Единая среда от идеи до тестирования</li>
+          <li>Понятные демо для стейкхолдеров</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ВОЗМОЖНОСТИ (по ролям) -->
+<section id="features">
+  <div class="container">
+    <div class="section-title">ВОЗМОЖНОСТИ</div>
+    <div class="section-sub">Что умеет <span class="logo-atrium">ATRI<span class="tiffany-u">U</span>M</span> — по ролям и задачам</div>
+    <div class="features-grid">
+      <div class="feature-item">
+        <h3>📊 Для аналитиков</h3>
+        <ul>
+          <li>BPMN, UML, ER-диаграммы</li>
+          <li>SWOT, матрицы приоритетов</li>
+          <li>Визуализация данных</li>
+          <li>Экспорт в PDF/PPT</li>
+          <li>Встроенные шаблоны</li>
+        </ul>
+      </div>
+      <div class="feature-item">
+        <h3>📱 Для SMM</h3>
+        <ul>
+          <li>Сетки 3×3, 3×6, 3×9</li>
+          <li>Календарь публикаций</li>
+          <li>Автопостинг</li>
+          <li>Аналитика трендов</li>
+        </ul>
+      </div>
+      <div class="feature-item">
+        <h3>🎨 Для дизайнеров</h3>
+        <ul>
+          <li>Логотипы, баннеры, обложки</li>
+          <li>Печатная продукция (CMYK)</li>
+          <li>Библиотека шрифтов и иконок</li>
+          <li>Векторный редактор</li>
+        </ul>
+      </div>
+      <div class="feature-item">
+        <h3>👥 Совместная работа</h3>
+        <ul>
+          <li>Real-time правки</li>
+          <li>Комментарии и реакции</li>
+          <li>Режим клиента (скрытые зоны, водяные знаки)</li>
+        </ul>
+      </div>
+      <div class="feature-item">
+        <h3>🖱️ Интерактивные прототипы</h3>
+        <ul>
+          <li>Кликабельные зоны</li>
+          <li>Симуляция процессов</li>
+          <li>Демо для стейкхолдеров</li>
+        </ul>
+      </div>
+      <div class="feature-item">
+        <h3>📋 Шаблоны</h3>
+        <ul>
+          <li>120+ готовых шаблонов</li>
+          <li>Аналитика, SMM, дизайн</li>
+          <li>Свои шаблоны</li>
+        </ul>
+      </div>
+      <div class="feature-item">
+        <h3>🔌 Интеграции</h3>
+        <ul>
+          <li>Slack, Teams, Notion</li>
+          <li>Google Drive, Buffer</li>
+          <li>Telegram-бот и API в планах</li>
+        </ul>
+      </div>
+      <div class="feature-item">
+        <h3>⚙️ Технические детали</h3>
+        <ul>
+          <li>Хостинг в РФ</li>
+          <li>Шифрование данных</li>
+          <li>Резервные копии</li>
+          <li>Поддержка 24/5</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ТАРИФЫ -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-title">НАЧНИТЕ ПРЯМО СЕЙЧАС</div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-name">Бесплатный</div>
+        <div class="pricing-desc">Ограниченный функционал для небольших задач</div>
+        <div class="pricing-price">0 ₽</div>
+        <button class="btn-price" onclick="alert('Демо-режим: регистрация откроется позже')">Выбрать</button>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-name">Стандартный</div>
+        <div class="pricing-desc">Для средних команд, расширенный набор инструментов для совместной работы и визуализации</div>
+        <div class="pricing-price">299 ₽</div>
+        <button class="btn-price" onclick="alert('Подписка в разработке')">Выбрать</button>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-name">Корпоративный</div>
+        <div class="pricing-desc">Индивидуальные условия для крупных компаний, неограниченное количество пользователей</div>
+        <div class="pricing-price">Свяжитесь с нами</div>
+        <button class="btn-price-outline" onclick="alert('Почта: kastanovad24@gmail.com')">Связаться</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ФОРМА РЕГИСТРАЦИИ -->
+<section id="register">
+  <div class="container">
+    <div class="form-block">
+      <h3>Запишись прямо сейчас<br>и открой новые возможности</h3>
+      <p style="color:#0ABAB5; margin-top: 8px; font-weight: 600;">Бесплатно!</p>
+      <div class="form-group">
+        <input type="text" placeholder="Ваше имя" id="regName">
+        <input type="email" placeholder="Ваш e-mail" id="regEmail">
+      </div>
+      <button class="btn-primary" style="width: 100%;" onclick="registerUser()">Зарегистрироваться</button>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>ATRIUM — российский сервис для профессиональной работы</p>
+    <p style="margin-top: 12px;">kastanovad24@gmail.com | Telegram | В разработке</p>
+    <p style="margin-top: 20px;">© 2026, команда «Атриумтим»</p>
+  </div>
+</footer>
+
+<script>
+  function registerUser() {
+    let name = document.getElementById('regName').value.trim();
+    let email = document.getElementById('regEmail').value.trim();
+    if (!name || !email) {
+      alert('Пожалуйста, заполните имя и e-mail');
+      return;
+    }
+    if (!email.includes('@')) {
+      alert('Введите корректный e-mail');
+      return;
+    }
+    alert(`Спасибо, ${name}! На почту ${email} отправлены инструкции. Демо-режим: функционал доски будет доступен после запуска.`);
+    // здесь можно добавить отправку данных на бэкенд
+  }
+</script>
+</body>
+</html>
